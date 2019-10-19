@@ -23,7 +23,7 @@ resources:
   Cloud_Machine_1:
     type: Cloud.Machine
     properties:
-      image: bitnami-tomcat-8.5.46-0
+      image: bitnami-tomcat-8.5.46
       flavor: small
       cloudConfig:
         hostname: '${input.hostname1}'
