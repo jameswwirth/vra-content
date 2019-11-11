@@ -31,7 +31,7 @@ stages:
           version: ''
           parameters: {
             user: vmware,
-            sshkey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDBqa/DVGZYsvga24xAEnFDpBUGuip43qcw81uVPqEIoL5rRDmrfEOfR/Wg9hMDLQgOtmjX5n2Y83WYIjadscvXygwyZhWUiYL8UvOqDdFtCkWoD0DFkmTttld4fFETCvNdRMJtnfGmQRhc9zMdeIS6BGoe/66INKmVfNyfKfHhd7SeJ/UQmsu8yVeA6bpWhz0/bG/+H50Gs2Zpba/16UF2e4PJ7hah167mO+ZkHAtNIumcaM9SOxE4eUSTItajOTEXgnKV3XtloyRrdNikwj2fBr5QzTCEn8afpg7/Sv1YchfS5SZdJfR4sJbh0bNlYQNTiXoHK/YxhoTpZq7bVArT,
+            sshkey: '${var.ssh-james-pub-key}',
             hostname1: bitnami-tomcat,
             SelectCloud: 'env:aws'
           }

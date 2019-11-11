@@ -1,9 +1,9 @@
 ---
 project: 10FoD Traditional
 kind: PIPELINE
-name: bitnami-artifactory
+name: pulse-build
 enabled: true
-description: Pipeline to deploy bitnami-artifactory to aws
+description: Pipeline to deploy pulse-build to aws
 concurrency: 10
 ciWorkspace:
   endpoint: ''
@@ -25,21 +25,21 @@ stages:
           gitServer: vra-content
         input:
           blueprint: ''
-          filepath: blueprints/bitnami-artifactory/blueprint.yaml
+          filepath: blueprints/pulse-build/blueprint.yaml
           action: CreateDeployment
           deploymentName: ''
           version: ''
           parameters: {
             user: vmware,
-            sshkey: '${var.ssh-james-pub-key}',
-            hostname1: bitnami-artifactory,
+            sshkey: ${var.ssh-cloud-pub-key},
+            hostname1: pulse-build,
             SelectCloud: 'env:aws'
           }
 notifications:
   email:
-  - event: SUCCESS
-    subject: bitnami-artifactory deployment
+  - subject: pulse-build deployment
     endpoint: Codestream-Default-Email
-    body: Deployment notification for bitnami-artifactory
+    event: SUCCESS
+    body: Deployment notification for pulse-build
     to:
     - wirthj@vmware.com
