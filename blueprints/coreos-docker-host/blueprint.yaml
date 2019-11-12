@@ -1,4 +1,4 @@
-name: pulse-build
+name: coreos-docker-host
 version: 0.1
 formatVersion: 1
 inputs:
@@ -8,7 +8,7 @@ inputs:
       - 'env:aws'
   hostname1:
     type: string
-    default: pulse-build
+    default: coreos-docker-host
   user:
     type: string
     title: SSH user
@@ -23,7 +23,7 @@ resources:
   Cloud_Machine_1:
     type: Cloud.Machine
     properties:
-      image: Ubuntu-Server-18.04
+      image: coreos-stable-2247.6.0
       flavor: small
       cloudConfig:
         hostname: '${input.hostname1}'
