@@ -1,0 +1,69 @@
+formatVersion: 1
+name: ubuntu-docker-host-vsphere
+version: v2
+inputs:
+  hostname:
+    type: string
+    title: Specify a hostname
+  network:
+    type: string
+    title: Specify network connection
+    enum:
+      - Ondemand
+      - Existing
+resources:
+  Cloud_vSphere_Network_1:
+    type: Cloud.vSphere.Network
+    metadata:
+      layoutPosition:
+        - 0
+        - 0
+    properties:
+      networkType: existing
+      constraints:
+        - tag: '${input.network == "Ondemand" ? "net:ondemand" : "net:existing"}'
+        - tag: 'net:vsphere'
+        - tag: 'net:dev'
+  Cloud_vSphere_Machine_1:
+    type: Cloud.vSphere.Machine
+    metadata:
+      layoutPosition:
+        - 1
+        - 0
+    properties:
+      name: '${input.hostname}'
+      constraints:
+        - tag: 'cloud:vsphere'
+        - tag: 'env:dev'
+      image: Ubuntu
+      flavor: small
+      cloudConfig: |
+        #cloudconfig
+        repo_update: true
+        repo_upgrade: all
+        package_update: true
+        package_upgrade: all
+
+        packages:
+         - wget
+         - sshpass
+         - curl
+
+        runcmd:
+         - hostnamectl set-hostname ${input.hostname}
+         - echo ubuntu:VMware123|sudo chpasswd
+         - sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g'  /etc/ssh/sshd_config
+         - sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/g'  /etc/ssh/sshd_config
+         - service sshd restart
+         - apt-get update -y 
+         - apt-get install apt-transport-https ca-certificates curl software-properties-common
+         - /usr/bin/curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+         - apt-key fingerprint 0EBFCD88 -y 
+         - add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+         - apt-get update -y 
+         - apt-get install docker-ce -y
+         - /bin/sed -i 's@ExecStart=/usr/bin/dockerd -H fd://@ExecStart=/usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock@' /lib/systemd/system/docker.service
+         - /bin/systemctl daemon-reload
+         - /bin/systemctl restart docker
+      networks:
+        - network: '${resource.Cloud_vSphere_Network_1.id}'

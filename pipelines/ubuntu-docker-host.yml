@@ -1,9 +1,9 @@
 ---
 project: 10FoD Traditional
 kind: PIPELINE
-name: coreos-docker-host
+name: ubuntu-docker-host
 enabled: true
-description: Pipeline to deploy coreos-docker-host to aws
+description: Pipeline to deploy ubuntu-docker-host to aws
 concurrency: 10
 ciWorkspace:
   endpoint: docker-host-aws
@@ -25,21 +25,21 @@ stages:
           gitServer: vra-content
         input:
           blueprint: ''
-          filepath: blueprints/coreos-docker-host/blueprint.yaml
+          filepath: blueprints/ubuntu-docker-host-aws/blueprint.yaml
           action: CreateDeployment
           deploymentName: ''
           version: ''
           parameters: {
-            user: core,
+            user: vmware,
             sshkey: '${var.ssh-cloud-pub-key}',
-            hostname1: coreos-docker-host,
+            hostname1: ubuntu-docker-host,
             SelectCloud: 'env:aws'
           }
 notifications:
   email:
   - event: SUCCESS
-    subject: coreos-docker-host deployment
+    subject: ubuntu-docker-host deployment
     endpoint: Codestream-Default-Email
-    body: Deployment notification for coreos-docker-host
+    body: Deployment notification for ubuntu-docker-host
     to:
     - wirthj@vmware.com

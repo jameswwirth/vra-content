@@ -1,0 +1,50 @@
+---
+project: 10FoD Traditional
+kind: ENDPOINT
+name: vra-content
+description: vra-content repo
+type: scm:git
+properties:
+  branch: master
+  repoURL: https://github.com/jameswwirth/vra-content
+  authType: privateToken
+  userName: jameswwirth
+  serverType: GitHub
+  fingerprint: 3111500C4A66012CDAE333EC3FCA1C9DDE45C954440E7EE413716BFF3663C074
+  privateToken: 164f562ddb223c3c74c85e2f4ad2e4a585d4e7d3
+---
+project: 10FoD Traditional
+kind: ENDPOINT
+name: docker-hub-vra-ci-task
+description: ''
+type: vrcs.docker.registry:DockerRegistry
+properties:
+  repoURL: https://hub.docker.com/repository/docker/jameswwirth/vra-ci-task
+  password: s2enc~p/DL0gt1k7JgaQrmPkNHRVsJKb6yjouwF8wIkZHRAXI=
+  username: jameswwirth
+  serverType: dockerhub
+---
+project: 10FoD Traditional
+kind: ENDPOINT
+name: samplewebsite
+description: Repository containing a sample website
+type: scm:git
+properties:
+  branch: master
+  repoURL: https://github.com/jameswwirth/samplewebsite
+  authType: privateToken
+  userName: jameswwirth
+  serverType: GitHub
+  fingerprint: 3111500C4A66012CDAE333EC3FCA1C9DDE45C954440E7EE413716BFF3663C074
+  privateToken: 164f562ddb223c3c74c85e2f4ad2e4a585d4e7d3
+---
+project: 10FoD Traditional
+kind: ENDPOINT
+name: docker-host-aws
+description: ''
+type: vrcs.docker:DockerServer
+properties:
+  url: http://3.88.143.34:2375
+  sharedPath: /sharedPath
+  certificate: ''
+  pollInterval: 5.0
